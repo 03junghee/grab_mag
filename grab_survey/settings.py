@@ -20,23 +20,23 @@ ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
-    # 'django.contrib.admin',
-    # 'django.contrib.auth',
-    # 'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
+    # 'django.contrib.admin',  <-- 이건 지워도 됨
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',  # 필수
+    'django.contrib.messages',  # 필수
     'django.contrib.staticfiles',
-    'survey',
+    'survey', # 본인의 앱 이름
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # WhiteNoise는 여기!
-    'django.contrib.sessions.middleware.SessionMiddleware', # Session이 먼저
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',  # 1. 이게 Message보다 반드시 위!
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware', # Message가 그 다음
+    'django.contrib.messages.middleware.MessageMiddleware', # 2. 이게 Session 아래에 위치!
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
