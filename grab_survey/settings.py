@@ -70,7 +70,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -117,3 +116,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+# 세션 데이터를 DB가 아닌 브라우저 쿠키에 저장하도록 변경 (DB 안 써도 됨!)
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
+# 보안을 위해 추가하면 좋은 설정
+SESSION_COOKIE_HTTPONLY = True
