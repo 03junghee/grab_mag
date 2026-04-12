@@ -1,0 +1,63 @@
+{% extends 'survey/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="survey-container">
+    {% if question.img %}
+        <img src="{% static 'images/' %}{{ question.img }}" class="step-img">
+    {% endif %}
+
+    <h1 class="main-title">{{ question.title }}</h1>
+    <p class="sub-text">{{ question.sub_title|linebreaksbr }}</p>
+
+    {% if question.type == 'radio' %}
+        <div class="accent-bar"></div>
+    {% endif %}
+
+    <form method="{% if question.type == 'intro' %}get{% else %}post{% endif %}" 
+          action="{% if question.type == 'intro' %}{% url 'survey_step' step=step|add:1 %}{% endif %}">
+        
+        {% csrf_token %}
+
+        {% if question.type == 'text' or question.type == 'number' %}
+            <input type="{{ question.type }}" name="answer" placeholder="{{ question.placeholder }}" required>
+        {% endif %}
+
+        {% if question.type == 'radio' %}
+            <div class="options-container">
+                {% for option in question.options %}
+                    <label class="radio-option">
+                        <input type="radio" name="answer" value="{{ option }}" required>
+                        <span class="option-text">{{ option }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if question.type == 'checkbox' %}
+            <p class="guide-text">* 다중 선택이 가능합니다</p>
+            <div class="checkbox-group">
+                {% for option in question.options %}
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="answer" value="{{ option }}">
+                        <span class="checkbox-label">{{ option }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if question.type == 'select' %}
+            <select name="answer" required>
+                <option value="" disabled selected>{{ question.placeholder }}</option>
+                {% for option in question.options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        {% endif %}
+
+        <button type="submit" class="next-btn">
+            {{ question.button_text }}
+        </button>
+    </form>
+</div>
+{% endblock %}
