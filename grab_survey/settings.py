@@ -67,7 +67,7 @@ WSGI_APPLICATION = 'grab_survey.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), # 절대 경로로 변경
     }
 }
 
@@ -111,7 +111,8 @@ USE_TZ = True
 # settings.py
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # 실제 static 폴더 위치
+# Vercel 빌드 시 staticfiles 폴더가 없으면 에러가 날 수 있으니 WhiteNoise 저장소 설정 추가
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
