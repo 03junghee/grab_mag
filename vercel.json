@@ -1,15 +1,15 @@
 {
   "builds": [
     {
-      "src": "프로젝트이름/wsgi.py", 
+      "src": "grab_survey/wsgi.py",  
       "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
+      "config": { "runtime": "python3.12" }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "프로젝트이름/wsgi.py"
+      "dest": "grab_survey/wsgi.py" 
     }
   ]
 }
