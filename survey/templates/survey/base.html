@@ -40,27 +40,50 @@
             max-width: 450px;
             background-color: var(--bg-white);
             border-radius: 30px; /* 더 둥글게 만들어 부드러운 인상 */
-            padding: 40px 30px;
+            padding: 0 0px 10px 0px; /* 상 0, 우 30, 하 40, 좌 30 (아래 버튼 여백만 유지) */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* 은은한 그림자 추가 */
             text-align: center;
+            overflow: hidden; /* 이미지 모서리가 둥글게 잘리도록 설정 */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 내부 요소들을 중앙 정렬 */
         }
-
+        img {
+            width: 100%;           /* 부모가 지정한 max-width 내에서 꽉 차게 */
+            max-width: 350px;      /* 기준이 되는 너비 (이전 답변과 통일) */
+            height: auto;          /* 비율 유지 */
+            
+            /* 핵심: 위아래 마진을 강제로 제거 */
+            margin: 0 !important; 
+            
+            border-radius: 15px 15px 0 0; /* 위쪽 모서리만 둥글게 (이미지가 컨테이너 맨 위라면) */
+            display: block;        /* 하단 미세 공백 제거 */
+        }
         /* 질문 제목 스타일 */
         h2 {
+            color: #f06292;
             font-size: 20px;
-            color: var(--main-pink);
-            margin-bottom: 10px;
-            font-weight: 800;
+            font-weight: bold;
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            
+            /* 핵심: 사진과의 간격을 최소화 */
+            margin-top: 10px !important; /* 사진 바로 아래 붙도록 아주 작게 설정 */
+            margin-bottom: 25px; /* 선택지와의 간격 */
         }
 
         .main-title {
             color: #f06292;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
-            /* 핵심: 아래쪽 여백을 늘리고 위쪽도 충분히 줍니다 */
-            margin-top: 40px;    /* 위쪽 공간 확보 */
-            margin-bottom: 40px; /* 입력창과의 간격 확보 */
             text-align: center;
+            width: 100%;
+            max-width: 350px;
+            
+            /* 핵심: 사진과의 간격을 최소화 */
+            margin-top: 10px !important; /* 사진 바로 아래 붙도록 아주 작게 설정 */
+            margin-bottom: 25px; /* 선택지와의 간격 */
         }
 
 
