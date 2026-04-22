@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="survey-container">
-    <img src="{{ question.img }}" style="width: 400px; margin: 40px 0;">
+    <img src="{{ question.img }}" style="width: 350px;">
 
     <h1 class="main-title">{{ question.title }}</h1>
     <p class="sub-text">{{ question.sub_title|linebreaksbr }}</p>
@@ -14,14 +14,14 @@
         {% csrf_token %}
 
         {% if question.type == 'text' or question.type == 'number' %}
-            <input type="{{ question.type }}" name="answer" placeholder="{{ question.placeholder }}" required>
+            <input type="{{ question.type }}" name="answer" placeholder="{{ question.placeholder }}">
         {% endif %}
 
         {% if question.type == 'radio' %}
             <div class="options-container">
                 {% for option in question.options %}
                     <label class="radio-option">
-                        <input type="radio" name="answer" value="{{ option }}" required>
+                        <input type="radio" name="answer" value="{{ option }}">
                         <span class="option-text">{{ option }}</span>
                     </label>
                 {% endfor %}
@@ -41,7 +41,7 @@
         {% endif %}
 
         {% if question.type == 'select' %}
-            <select name="answer" required>
+            <select name="answer">
                 <option value="" disabled selected>{{ question.placeholder }}</option>
                 {% for option in question.options %}
                     <option value="{{ option }}">{{ option }}</option>
@@ -57,7 +57,7 @@
                     </button>
                 {% endfor %}
             </div>
-            <input type="hidden" name="answer" id="selected-score" required>
+            <input type="hidden" name="answer" id="selected-score">
         {% endif %}
 
         <script>
