@@ -6,7 +6,7 @@ from .utils import send_telegram_message
 
 QUESTIONS = {
     0: { 
-        'sub_title': '몇 년 생이신가요?',
+        'sub_title': '20대 트렌드 매거진 그랩이라고 합니다!\n트렌드 리서치를 위한 그랩 길거리 인터뷰에\n응해주셔서 감사합니다 :)',
         'type': 'radio',
         'img': 'https://i.imgur.com/95HntuS.jpeg',
         'options': [],
