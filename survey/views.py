@@ -13,14 +13,14 @@ QUESTIONS = {
         'button_text': '> 다음 문제',
     },
     1: {  
-        'sub_title': '그랩은 혼족과 같은 메가트렌드를 예측하고자 합니다 :D\n요즘 나는 어떤 하루를 보내고,\n어떤 생각을 자주 하나요?',
+        'sub_title': '<span style="font-size: 15px; font-weight: 500;">그랩은 혼족과 같은 메가트렌드를 예측하고자 합니다 :D</span>\n요즘 나는 어떤 하루를 보내고,\n어떤 생각을 자주 하나요?',
         'type': 'radio',
         'img': 'https://i.imgur.com/MTw0c4O.jpeg',
         'options': ['남들과 비슷한 듯 평범한 일상~', '남들과는 다른 나만의 특별한 일상!'],
         'button_text': '> 다음 문제',
     },
     2: {
-        'sub_title': '[인테리어 트렌드 조사]\n내가 자취하면 화이트톤 vs 우드톤 vs 블랙실버모던',
+        'sub_title': '[인테리어 트렌드 조사]\n내가 자취하면?',
         'type': 'radio',
         'options': ['올 화이트톤 !', '푸릇 싱싱 우드톤!', '블랙 실버 모던톤!', '나만의 독보적인 취향✨'],
         'img': 'https://i.imgur.com/7HoVQ2u.jpeg',
@@ -123,23 +123,38 @@ def survey_step(request, step):
         q_title = question_info.get("title", f"Q{step}")
         q_sub_title = question_info.get("sub_title", "").replace('\n', ' ')
         
-        # 데이터 저장
-        data[f"[{step}. {q_title}] {q_sub_title}"] = request.POST.get('answer')
+        # 1. 데이터 저장 (체크박스 대응을 위해 getlist 사용 권장)
+        if question_info.get('type') == 'checkbox':
+            answer = request.POST.getlist('answer')
+        else:
+            answer = request.POST.get('answer')
+            
+        data[f"[{step}. {q_title}] {q_sub_title}"] = answer
         request.session['survey_data'] = data
         
-        if step < 13:  
+        # 2. 단계별 리다이렉트 로직 분기
+        if step < 11:
+            # 1~10단계는 다음 질문으로
             return redirect('survey_step', step=step + 1)
-        else:
-            # 1. 텔레그램 발송
+        
+        elif step == 11:
+            # 11단계(만족도) 완료 후 중간 결과 페이지로 이동
+            return redirect('result')
+        
+        elif step == 12:
+            # 12단계(이름) 완료 후 13단계로 이동
+            return redirect('survey_step', step=13)
+        
+        elif step == 13:
+            # 마지막 13단계(연락처) 완료 후 텔레그램 발송 및 세션 종료
             send_telegram_message(data)
-            
-            # 2. [핵심] 발송 성공 후 세션 데이터 삭제
-            # 이렇게 해야 다음 사람이 참여할 때 이전 데이터와 섞이지 않습니다.
             if 'survey_data' in request.session:
                 del request.session['survey_data']
             
-            return redirect('result')
-        
+            # 최종 완료 페이지(또는 메인)로 이동
+            return redirect('main') 
+
+    # GET 요청 처리
     context = {
         'step': step,
         'question': QUESTIONS.get(step),

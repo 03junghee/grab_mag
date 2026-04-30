@@ -1,21 +1,50 @@
 {% extends 'survey/base.html' %}
 
 {% block content %}
-<div style="padding: 0;">
-    <img src="https://i.imgur.com/Ux15VCH.png" style="width: 150px; margin: 40px 0;">
+<!-- 전체를 감싸는 컨테이너에 text-align: center를 추가하여 내부 요소를 중앙으로 모읍니다 -->
+<div style="padding: 0; text-align: center; width: 100%;">
     
-    <div style="background-color: #F8BBD0; padding: 40px 20px; border-radius: 0; min-height: 60vh;">
-        <h3 style="font-size: 18px; margin-bottom: 5px;">당신은...</h3>
-        <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">메가 트렌드를 이끄는</h2>
-        <h1 style="font-size: 28px; font-weight: 900; color: white; margin-bottom: 20px;">트렌드세터 Trendsetter</h1>
+    <!-- 그랩 매거진 로고: display: block과 margin: auto로 중앙 정렬을 확실히 합니다 -->
+    <img src="https://i.imgur.com/Ux15VCH.png" 
+         style="width: 150px; display: block; margin: 40px auto; height: auto;">
+    
+    <!-- 하단 핑크색 섹션 -->
+    <div style="background-color: #F8BBD0; padding: 45px 25px; border-radius: 0; min-height: 60vh; display: flex; flex-direction: column; align-items: center;">
         
-        <div style="width: 40px; height: 4px; background-color: white; margin: 0 auto 30px;"></div>
+        <h3 style="font-size: 18px; margin-bottom: 8px; color: #444; width: 100%;">당신은...</h3>
         
-        <p style="text-align: left; font-size: 14px; line-height: 1.8; word-break: keep-all;">
+        <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 8px; color: #F06292; width: 100%;">메가 트렌드를 이끄는</h2>
+        
+        <h1 style="font-size: 28px; font-weight: 900; color: white; margin-bottom: 25px; width: 100%; letter-spacing: -0.5px;">
+            트렌드세터 Trendsetter
+        </h1>
+        
+        <!-- 구분선 중앙 정렬 -->
+        <div style="width: 40px; height: 4px; background-color: white; margin-bottom: 35px;"></div>
+        
+        <!-- 설명 텍스트: 양쪽 정렬(justify)을 유지하되 문단 자체는 중앙에 위치하도록 설정 -->
+        <p style="text-align: justify; font-size: 15px; line-height: 1.8; word-break: keep-all; color: #444; max-width: 320px; margin: 0 auto;">
             새로운 흐름을 누구보다 빠르게 감지하고, 자신만의 기준과 시선으로 해석해내는 사람입니다.<br><br>
             단순히 트렌드를 따르기보다, 스스로의 취향과 생각을 기반으로 새로운 방향을 만들어냅니다.<br><br>
             당신의 깊이 있는 인사이트와 감각적인 선택은 주변에 자연스럽게 영향을 미치며, 앞으로의 흐름을 형성하는 데 중요한 역할을 합니다 :)
         </p>
+
+        <!-- 계속하기 버튼 -->
+        <a href="{% url 'survey_step' step=12 %}" 
+           style="display: block; 
+                  width: 100%; 
+                  max-width: 300px;
+                  background-color: #F462B1; 
+                  color: white; 
+                  padding: 16px 0; 
+                  border-radius: 15px; 
+                  text-decoration: none; 
+                  font-weight: bold; 
+                  margin-top: 45px;
+                  font-size: 18px;
+                  box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            계속하기
+        </a>
     </div>
 </div>
 {% endblock %}

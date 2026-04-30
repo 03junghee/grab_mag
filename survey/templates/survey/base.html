@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grab Trend Research</title>
     <style>
+        @font-face {
+            font-family: 'JoseonGulim';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+            font-weight: normal;
+            font-display: swap;
+        }
+
         :root {
             --main-pink: #F462B1;
             --soft-pink: #FFF0F9; /* 배경용 연한 핑크 */
@@ -19,13 +26,13 @@
             margin: 0;
             padding: 0;
             background-color: #F9F9F9; /* 전체 배경은 아주 연한 회색으로 깔아주면 컨테이너가 돋보여요 */
-            font-family: 'Pretendard', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
 
             zoom: 0.8;
+            font-family: 'JoseonGulim', sans-serif !important;
         }
         
         form {
@@ -49,7 +56,7 @@
             align-items: center; /* 내부 요소들을 중앙 정렬 */
         }
         img {
-            width: 100%;           /* 부모가 지정한 max-width 내에서 꽉 차게 */
+            width: 400px;           /* 부모가 지정한 max-width 내에서 꽉 차게 */
             max-width: none;      /* 기준이 되는 너비 (이전 답변과 통일) */
             height: auto;          /* 비율 유지 */
             
@@ -103,13 +110,14 @@
 
 
         .sub-text {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600; /* 조금 더 굵게 */
             color: #444;
             line-height: 1.5;
             word-break: keep-all;
             padding: 0 !important;
-            margin: 0;
+            margin-top: 30px;
+            margin-bottom: 50px;
         }
 
         /* 입력창 Placeholder 색상 조절 */
