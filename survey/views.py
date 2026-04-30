@@ -62,7 +62,7 @@ QUESTIONS = {
         'button_text': '> 다음 문제',
     },
     8: {
-        'sub_title': '[20대 생각 트렌드 조사]\n잠깐! QUIZE TIME!\n1년 후의 나는 어떤 모습일 것 같나요?',
+        'sub_title': '[20대 생각 트렌드 조사]\n1년 후의 나는 어떤 모습일 것 같나요?',
         'type': 'radio',
         'options': ['나만의 추구미 실현하기', '롤모델 모습에 한발짝 다가가기', '버킷리스트 n개 이루기'],
         'img': 'https://i.imgur.com/TemSdBU.jpeg',

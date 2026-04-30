@@ -36,11 +36,11 @@
         }
 
         .container {
-            width: 70%;
+            width: 100%;
             max-width: 450px;
             background-color: var(--bg-white);
             border-radius: 30px; /* 더 둥글게 만들어 부드러운 인상 */
-            padding: 0 0px 10px 0px; /* 상 0, 우 30, 하 40, 좌 30 (아래 버튼 여백만 유지) */
+            padding: 0; 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* 은은한 그림자 추가 */
             text-align: center;
             overflow: hidden; /* 이미지 모서리가 둥글게 잘리도록 설정 */
@@ -50,11 +50,14 @@
         }
         img {
             width: 100%;           /* 부모가 지정한 max-width 내에서 꽉 차게 */
-            max-width: 350px;      /* 기준이 되는 너비 (이전 답변과 통일) */
+            max-width: none;      /* 기준이 되는 너비 (이전 답변과 통일) */
             height: auto;          /* 비율 유지 */
             
             /* 핵심: 위아래 마진을 강제로 제거 */
-            margin: 0 !important; 
+            margin-top: 30px !important; /* 위쪽만 30px 정도 띄웁니다 */
+            margin-bottom: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
             
             border-radius: 15px 15px 0 0; /* 위쪽 모서리만 둥글게 (이미지가 컨테이너 맨 위라면) */
             display: block;        /* 하단 미세 공백 제거 */
@@ -65,11 +68,11 @@
             font-size: 20px;
             font-weight: bold;
             text-align: center;
-            width: 100%;
-            max-width: 350px;
+            width: 90%;
+            max-width: none;
             
             /* 핵심: 사진과의 간격을 최소화 */
-            margin-top: 10px !important; /* 사진 바로 아래 붙도록 아주 작게 설정 */
+            margin-top: 0 !important; /* 사진 바로 아래 붙도록 아주 작게 설정 */
             margin-bottom: 25px; /* 선택지와의 간격 */
         }
 
@@ -78,12 +81,12 @@
             font-size: 20px;
             font-weight: bold;
             text-align: center;
-            width: 100%;
-            max-width: 350px;
+            width: 90%;
+            max-width: none;
             
             /* 핵심: 사진과의 간격을 최소화 */
-            margin-top: 10px !important; /* 사진 바로 아래 붙도록 아주 작게 설정 */
-            margin-bottom: 25px; /* 선택지와의 간격 */
+            margin-top: 0 !important; /* 사진 바로 아래 붙도록 아주 작게 설정 */
+            margin-bottom: 20px; /* 선택지와의 간격 */
         }
 
 
@@ -94,7 +97,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center; /* 세로 중앙 정렬 보조 */
-            padding: 40px 20px;
+            padding: 0;
+            width: 100%;
         }
 
 
@@ -104,6 +108,8 @@
             color: #444;
             line-height: 1.5;
             word-break: keep-all;
+            padding: 0 !important;
+            margin: 0;
         }
 
         /* 입력창 Placeholder 색상 조절 */
@@ -215,8 +221,8 @@
         }
         /* 버튼 스타일 */
         .next-btn {
-            width: 100%;           /* 핵심: 이제 form의 너비(100%)를 다 씁니다 */
-            max-width: 400px;      /* 버튼이 너무 무한정 넓어지는 것 방지 */
+            width: 90%;           /* 핵심: 이제 form의 너비(100%)를 다 씁니다 */
+            max-width: none;      /* 버튼이 너무 무한정 넓어지는 것 방지 */
             box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
             
             background-color: var(--main-pink);
@@ -228,6 +234,7 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .next-btn:active {
