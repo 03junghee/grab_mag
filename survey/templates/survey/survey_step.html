@@ -40,6 +40,31 @@
             </div>
         {% endif %}
 
+        {% if step == 12 %}
+        <style>
+            /* 12단계 전용 여백 조정 */
+            .survey-container {
+                padding-top: 0 !important;
+                margin-top: 5px !important;
+            }
+            .sub-text {
+                margin-bottom: 10px !important;
+            }
+        </style>
+        {% endif %}
+
+        {% if question.type == 'final_contact' %}
+            {% for field in question.fields %}
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">{{ field.label }}</label>
+                    <input type="text" 
+                        name="{{ field.name }}" 
+                        placeholder="{{ field.placeholder }}"
+                        style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd;">
+                </div>
+            {% endfor %}
+        {% endif %}
+
         {% if question.type == 'select' %}
             <select name="answer">
                 <option value="" disabled selected>{{ question.placeholder }}</option>

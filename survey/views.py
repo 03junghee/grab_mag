@@ -50,7 +50,7 @@ QUESTIONS = {
     6: { 
         'sub_title': '[디저트 트렌드 조사]\n두쫀쿠, 버터떡.. 많은 디저트가 유행하고 있는데요!',
         'type': 'radio',
-        'img': 'https://i.imgur.com/UbuXQbv.jpeg',
+        'img': 'https://i.imgur.com/hezby3K.jpeg',
         'options': ['직접 사먹기', '애인이 사줘서 먹기', '친구들과 함께 있을 때 사먹기'],
         'button_text': '> 다음 문제',
     },    
@@ -90,15 +90,12 @@ QUESTIONS = {
         'button_text': '다음 문제',
     },
     12: {
-        'title': '이름(닉네임)을 알려주세요!',
-        'type': 'text',
-        'placeholder': '홍길동',
-        'button_text': '다음 문제',
-    },
-    13: {
-        'title': '연락처를 알려주세요!',
-        'type': 'text',
-        'placeholder': '010-0000-0000(선택)',
+        'title': '마지막으로 정보를 입력해주세요!',
+        'type': 'final_contact',  # 타입을 새로 정의하거나 구분합니다.
+        'fields': [
+            {'name': 'name', 'label': '이름(닉네임)', 'placeholder': '홍길동'},
+            {'name': 'phone', 'label': '연락처(선택)', 'placeholder': '010-0000-0000'}
+        ],
         'button_text': '완료하기',
     }
 }
@@ -142,10 +139,6 @@ def survey_step(request, step):
             return redirect('result')
         
         elif step == 12:
-            # 12단계(이름) 완료 후 13단계로 이동
-            return redirect('survey_step', step=13)
-        
-        elif step == 13:
             # 마지막 13단계(연락처) 완료 후 텔레그램 발송 및 세션 종료
             send_telegram_message(data)
             if 'survey_data' in request.session:
