@@ -22,7 +22,7 @@ QUESTIONS = {
     2: {
         'sub_title': '[인테리어 트렌드 조사]\n내가 자취하면?',
         'type': 'radio',
-        'options': ['올 화이트톤 !', '푸릇 싱싱 우드톤!', '블랙 실버 모던톤!', '나만의 독보적인 취향✨'],
+        'options': ['블랙 엔 화이트 모던톤!', '푸릇 싱싱 우드톤!', '나만의 독보적인 취향✨'],
         'img': 'https://i.imgur.com/7HoVQ2u.jpeg',
         'button_text': '> 다음 문제',
     },
@@ -57,7 +57,7 @@ QUESTIONS = {
     7: {
         'sub_title': '[여행 트렌드 조사]\n생각만 해도 행복한 여름 방학/휴가!\n무엇을 하며 보내실 예정인가요?',
         'type': 'radio',
-        'options': ['여행/휴식 :)', '비자발적 일정 :(', '미래를 위한 준비 !', '기타'],
+        'options': ['여행/휴식 :)', '비자발적 일정 :(', '미래를 위한 준비 !'],
         'img': 'https://i.imgur.com/wWPu820.jpeg',
         'button_text': '> 다음 문제',
     },
