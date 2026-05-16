@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from .utils import send_telegram_message
 
-# 이미지 파일명은 실제 static/images/ 폴더 내 파일명과 맞춰주세요!
-# survey/views.py
-
+# QUESTIONS 딕셔너리는 그대로 유지하되, 흐름을 0번부터 12번까지 매끄럽게 연결합니다.
 QUESTIONS = {
     0: {
         'sub_title': '길거리 인터뷰 콘텐츠 트렌드!\n알고 계시나요?',
@@ -91,7 +89,7 @@ QUESTIONS = {
     },
     12: {
         'title': '마지막으로 정보를 입력해주세요!',
-        'type': 'final_contact',  # 타입을 새로 정의하거나 구분합니다.
+        'type': 'final_contact',
         'fields': [
             {'name': 'name', 'label': '이름(닉네임)', 'placeholder': '홍길동'},
             {'name': 'phone', 'label': '연락처(선택)', 'placeholder': '010-0000-0000'}
@@ -101,59 +99,70 @@ QUESTIONS = {
 }
 
 def main(request):
-    # 이 함수는 오직 '이야기 시작!' 버튼이 있는 첫 화면만 보여줍니다.
     return render(request, 'survey/main.html')
 
 def home(request):
     if request.method == 'POST':
         request.session['survey_data'] = {}
-        return redirect('survey_step', step=1)
+        # 첫 번째 질문인 0번부터 시작하도록 수정합니다.
+        return redirect('survey_step', step=0)
     
-    # 만약 step1.html이 따로 없고 survey_step.html을 같이 쓴다면 이름을 맞춰주세요!
-    return render(request, 'survey/survey_step.html', {'step': 1, 'question': QUESTIONS[1]})
+    return render(request, 'survey/survey_step.html', {'step': 0, 'question': QUESTIONS[0]})
 
 def survey_step(request, step):
+    question_info = QUESTIONS.get(step)
+    
+    # 예외 처리: 존재하지 않는 단계 요청 시 메인으로
+    if not question_info:
+        return redirect('main')
+
     if request.method == 'POST':
         data = request.session.get('survey_data', {})
         
-        question_info = QUESTIONS.get(step)
         q_title = question_info.get("title", f"Q{step}")
         q_sub_title = question_info.get("sub_title", "").replace('\n', ' ')
         
-        # 1. 데이터 저장 (체크박스 대응을 위해 getlist 사용 권장)
+        # [수정] 타입별 데이터 저장 로직 세분화
         if question_info.get('type') == 'checkbox':
             answer = request.POST.getlist('answer')
+            data[f"[{step}. {q_title}] {q_sub_title}"] = answer
+        elif question_info.get('type') == 'final_contact':
+            # 12번 단계: 'answer'가 아니라 fields에 정의된 name들로 데이터를 직접 가져옵니다.
+            contact_info = {
+                'name': request.POST.get('name', '').strip(),
+                'phone': request.POST.get('phone', '').strip()
+            }
+            data[f"[{step}. {q_title}]"] = contact_info
         else:
             answer = request.POST.get('answer')
+            data[f"[{step}. {q_title}] {q_sub_title}"] = answer
             
-        data[f"[{step}. {q_title}] {q_sub_title}"] = answer
         request.session['survey_data'] = data
         
-        # 2. 단계별 리다이렉트 로직 분기
+        # [수정] 단계별 이동 흐름 제어 (최대 인덱스 12 기준)
         if step < 11:
-            # 1~10단계는 다음 질문으로
+            # 0~10단계는 다음 질문으로
             return redirect('survey_step', step=step + 1)
         
         elif step == 11:
-            # 11단계(만족도) 완료 후 중간 결과 페이지로 이동
+            # 11단계(만족도) 완료 후 중간 결과 페이지(result)로 이동
             return redirect('result')
         
         elif step == 12:
-            # 마지막 13단계(연락처) 완료 후 텔레그램 발송 및 세션 종료
+            # 12단계(연락처) 완료 후 텔레그램 발송 및 세션 초기화
             send_telegram_message(data)
             if 'survey_data' in request.session:
                 del request.session['survey_data']
-            
-            # 최종 완료 페이지(또는 메인)로 이동
             return redirect('main') 
 
     # GET 요청 처리
     context = {
         'step': step,
-        'question': QUESTIONS.get(step),
+        'question': question_info,
         'score_range': range(11),
     }
     return render(request, 'survey/survey_step.html', context)
 
 def result(request):
+    # result.html 내부의 '확인/다음' 버튼은 POST 방식으로 url 'survey_step' step=12 로 요청해야 합니다.
     return render(request, 'survey/result.html')
